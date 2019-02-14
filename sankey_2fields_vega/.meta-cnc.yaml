@@ -23,7 +23,7 @@ variables:
     type_hint: text
   - name: time_field
     description: index time or date field
-    default: panos-01
+    default: create_date
     type_hint: text
   - name: stack_1_field
     description: field for left side of sankey
