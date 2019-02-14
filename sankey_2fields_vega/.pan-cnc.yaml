@@ -1,0 +1,47 @@
+# descriptor info for sankey view
+
+# skillet name
+name: sankey_2field_visual
+# label used for menu selection
+label: Kibana Visual Vega Sankey 2-field
+description: Kibana Visual Vega Sankey 2-field visualization
+dependency:
+# type of device configuration
+type: template
+extends:
+
+# grouping of like snippets for dynamic menu creation in pan-cnc
+labels:
+  service_type: kibana
+
+# variables used in the configuration templates
+# type_hint defines the form field type in pan-cnc
+variables:
+  - name: index
+    description: index name (without * at the end)
+    default: hash-data
+    type_hint: text
+  - name: time_field
+    description: index time or date field
+    default: panos-01
+    type_hint: text
+  - name: stack_1_field
+    description: field for left side of sankey
+    default: mystk1
+    type_hint: text
+  - name: stack_1_label
+    description: chart axis label for left side of sankey
+    default: mystk1_label
+    type_hint: text
+  - name: stack_2_field
+    description: field for right side of sankey
+    default: mystk2
+    type_hint: text
+  - name: stack_2_label
+    description: chart axis label for right side of sankey
+    default: mystk2_label
+    type_hint: text
+
+snippets:
+  - name: sankey_vega.txt
+    file: sankey_vega.txt
