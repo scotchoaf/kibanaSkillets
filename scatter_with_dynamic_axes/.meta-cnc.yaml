@@ -20,7 +20,7 @@ labels:
 variables:
   - name: index
     description: index name (without * at the end)
-    default: hash-data
+    default: indexName
     type_hint: text
   - name: aggField
     description: key category field for aggregation count

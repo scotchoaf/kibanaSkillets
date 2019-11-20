@@ -2,33 +2,40 @@
 
 TO DO
 
-This visual is based on the tutorial from the [Sankey Vega Elastic blog](https://www.elastic.co/blog/sankey-visualization-with-vega-in-kibana)
-authored by Yuri Astrakhan.
+This visual is based on the Vega gallery example  [Zoomable Scatter Plot Example](https://vega.github.io/vega/examples/zoomable-scatter-plot/)
 
-The sankey visualization uses two associated values from a dataset and
-creates a path-based visual of the values as left and right stacks in
-the chart. You can also click on a specific stack values to see its
-specific associations.
+
+The reference scatter plot allows the user to both zoom and pan using mouse actions.
+
+The added content includes:
+
+* category coloring of data points
+* circle sizing based on a named field value
+* legends for the above category and sizing
+* tooltip pop-up providing circle context
 
 ### Input variables
 
-Most of the Vega input is the same with the inclusion of a few jinja variables
-to update the input specific to the user's deployment.
+The following are the variables used in the Vega text. All are required
+except for the 2 tooltip fields.
 
 + ```index```: name of the Elasticsearch index (without the '*' at the end)
 
-+ ```timefield```: time or date field used in the specific index allowing for
-the ability to use the Kibana time filter
++ ```aggField```:  used for each circle representation
 
-+ ```stack_1_field```: index field used for the left side of the chart
++ ```xAxisField```:  field for x-axis scatter plot values
 
-+ ```stack_1_label```: name to use for the stack1 chart axis label
++ ```yAxisField```:  field for y-axis scatter plot values
 
-+ ```stack_2_field```: index field used for the right side of the chart
++ ```colorByField```: field to color circles by category
 
-+ ```stack_2_label```: name to use for the stack2 chart axis label
++ ```sizeByField```: field used to set circle sizes
 
-***NOTE***: The stack1 and stack2 fields may require the use of
++ ```ToolTipLabelField1```: added label in the pop-up tooltip
+
++ ```ToolTipLabelField2```: added label in the pop-up tooltip
+
+***NOTE***: text fields may require the use of
 ```.keyword``` to be used in this vega visual.
 
 ### Kibana and long URLs
