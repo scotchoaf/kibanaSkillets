@@ -1,10 +1,10 @@
 # descriptor info for sankey view
 
 # skillet name
-name: sankey_2field_visual
+name: scatter_dynamic_axes
 # label used for menu selection
-label: Kibana Visual Vega Sankey 2-field
-description: Kibana Visual Vega Sankey 2-field visualization
+label: Kibana Visual Vega Scatter Plot with Dynamic Axes
+description: Kibana Visual Vega Scatter Plot with Dynamic Axes
 dependency:
 # type of device configuration
 type: template
