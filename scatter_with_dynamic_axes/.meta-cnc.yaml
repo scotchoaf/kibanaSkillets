@@ -1,0 +1,56 @@
+# descriptor info for sankey view
+
+# skillet name
+name: sankey_2field_visual
+# label used for menu selection
+label: Kibana Visual Vega Sankey 2-field
+description: Kibana Visual Vega Sankey 2-field visualization
+dependency:
+# type of device configuration
+type: template
+extends:
+
+# grouping of like snippets for dynamic menu creation in pan-cnc
+labels:
+  service_type: kibana
+  collection: kibana
+
+# variables used in the configuration templates
+# type_hint defines the form field type in pan-cnc
+variables:
+  - name: index
+    description: index name (without * at the end)
+    default: hash-data
+    type_hint: text
+  - name: aggField
+    description: key category field for aggregation count
+    default: aggField
+    type_hint: text
+  - name: xAxisField
+    description: field for x-axis of the scatter plot
+    default: xAxisField
+    type_hint: text
+  - name: yAxisField
+    description: field for y-axis of the scatter plot
+    default: yAxisField
+    type_hint: text
+  - name: colorByField
+    description: field for circle color categories
+    default: colorByField
+    type_hint: text
+  - name: sizeByField
+    description: field for circle sizing
+    default: sizeByField
+    type_hint: text
+  - name: ToolTipLabelField1
+    description: contextual data for circle pop-up tool tip
+    default: ToolTipLabelField1
+    type_hint: text
+  - name: ToolTipLabelField2
+    description: contextual data for circle pop-up tool tip
+    default: ToolTipLabelField2
+    type_hint: text
+
+snippets:
+  - name: scatter_w_dynamic_axes.txt
+    file: scatter_w_dynamic_axes.txt
