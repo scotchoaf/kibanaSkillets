@@ -1,9 +1,6 @@
 # Scatter Plot with Dynamic Axes
 
-TO DO
-
 This visual is based on the Vega gallery example  [Zoomable Scatter Plot Example](https://vega.github.io/vega/examples/zoomable-scatter-plot/)
-
 
 The reference scatter plot allows the user to both zoom and pan using mouse actions.
 
