@@ -18,7 +18,7 @@
           aggs: {
             table: {
               composite: {
-                size: 1000000
+                size: 10000
                 sources: [
                   {
                     stk1: {

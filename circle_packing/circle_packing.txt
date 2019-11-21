@@ -29,7 +29,7 @@
           aggs: {
             table: {
               composite: {
-                size: 1000
+                size: 10000
                 sources: [
                   {
                     field1: {
