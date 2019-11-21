@@ -22,6 +22,19 @@ variables:
     description: index name (without * at the end)
     default: indexName
     type_hint: text
+  - name: use_timeField
+    description: data includes a date-time field
+    default: "yes"
+    type_hint: dd
+    dd_list:
+      - key: yes
+        value: "yes"
+      - key: no
+        value: "no"
+  - name: timeField
+    description: index time or date field
+    default: create_date
+    type_hint: text
   - name: aggField
     description: key category field for aggregation count
     default: aggField

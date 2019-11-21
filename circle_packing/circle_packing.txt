@@ -17,7 +17,11 @@
       url: {
         %context%: true
         // comment out if no timefield in the data
+        {%- if use_timeField == "yes" %}
         %timefield%: {{ timefield }}
+        {% elseif %}
+        // %timefield%: {{ timefield }}
+        {% endif %}
         index: {{ index }}*
         body: {
           size: 0
@@ -34,12 +38,12 @@
                   }
                   {
                     field2: {
-                      terms: {field: "{{ middleCircle_field }} "}
+                      terms: {field: "{{ middleCircle_field }}"}
                     }
                   }
                   {
                     field3: {
-                      terms: {field: "{{ innerCircle_field }} "}
+                      terms: {field: "{{ innerCircle_field }}"}
                     }
                   }
                 ]

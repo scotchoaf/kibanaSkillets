@@ -16,6 +16,12 @@
       url: {
         index: {{ index }}*
         %context%: true
+        // comment out if no timefield in the data
+        {%- if use_timeField == "yes" %}
+        %timefield%: {{ timefield }}
+        {% elseif %}
+        // %timefield%: {{ timefield }}
+        {% endif %}
         body: {
           size: 0
           aggs: {

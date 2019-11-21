@@ -6,7 +6,12 @@
       name: rawData
       url: {
         %context%: true
-        %timefield%: {{ time_field }}
+        // comment out if no timefield in the data
+        {%- if use_timeField == "yes" %}
+        %timefield%: {{ timefield }}
+        {% elseif %}
+        // %timefield%: {{ timefield }}
+        {% endif %}
         index: {{ index }}*
         body: {
           size: 0

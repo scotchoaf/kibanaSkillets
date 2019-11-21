@@ -20,9 +20,18 @@ labels:
 variables:
   - name: index
     description: index name (without * at the end)
-    default: hash-data
+    default: indexName
     type_hint: text
-  - name: time_field
+  - name: use_timeField
+    description: data includes a date-time field
+    default: "yes"
+    type_hint: dd
+    dd_list:
+      - key: yes
+        value: "yes"
+      - key: no
+        value: "no"
+  - name: timeField
     description: index time or date field
     default: create_date
     type_hint: text
