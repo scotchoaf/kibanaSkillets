@@ -1,0 +1,248 @@
+{
+  $schema: https://vega.github.io/schema/vega/v4.3.json
+  config: {
+    kibana: {type: "map", latitude: 10, longitude: -5, zoom: 2}
+  }
+  data: [
+    {
+      name: table
+      url: {
+        index: {{ index }}*
+        %context%: true
+        // Uncomment to enable time filtering
+        {%- if use_timeField == "yes" %}
+        %timefield%: {{ timefield }}
+        {% else %}
+        // %timefield%: {{ timefield }}
+        {% endif %}
+        body: {
+          size: 0
+          aggs: {
+            origins: {
+              terms: {field: "{{ src_id }}", size: 10000}
+              aggs: {
+                srcLocation: {
+                  top_hits: {
+                    size: 1
+                    _source: {
+                      includes: ["{{ src_lat }}", "{{ src_lon }}", "{{ src_id }}", "{{ src_country }}"]
+                    }
+                  }
+                }
+                destinations: {
+                  terms: {field: "{{ dst_id }}", size: 10000}
+                  aggs: {
+                    dstLocation: {
+                      top_hits: {
+                        size: 1
+                        _source: {
+                          includes: ["{{ dst_lat }}", "{{ dst_lon }}"]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      format: {property: "aggregations.origins.buckets"}
+      transform: [
+        {
+          type: geopoint
+          projection: projection
+          fields: [
+            srcLocation.hits.hits[0]._source.{{ src_lon }}
+            srcLocation.hits.hits[0]._source.{{ src_lat }}
+          ]
+        }
+      ]
+    }
+    {
+      name: selectedDatum
+      on: [
+        {trigger: "!selected", remove: true}
+        {trigger: "selected", insert: "selected"}
+      ]
+    }
+  ]
+  signals: [
+    {
+      name: lineThickness
+      value: 5
+      bind: {input: "range", min: 1, max: 10, step: 1}
+    }
+    {
+      name: lineOpacity
+      value: 0.8
+      bind: {input: "range", min: 0.5, max: 1, step: 0.1}
+    }
+    {
+      name: lineColor
+      value: orange
+      bind: {
+        input: select
+        options: ["green", "orange", "red"]
+      }
+    }
+    {
+      name: selected
+      value: null
+      on: [
+        {events: "@srcCountry:mouseover", update: "datum"}
+        {events: "@srcCountry:mouseout", update: "null"}
+      ]
+    }
+    {
+      name: base_stroke
+      value: null
+      on: [
+        {events: "click", update: "base_stroke ? null : 'steelblue'"}
+        {events: "mousedown!", update: "base_stroke"}
+      ]
+    }
+  ]
+  scales: [
+    {
+      name: srcSize
+      type: linear
+      domain: {data: "table", field: "doc_count"}
+      range: [
+        {signal: "zoom*zoom*1+1"}
+        {signal: "zoom*zoom*500+1"}
+      ]
+    }
+  ]
+  marks: [
+    {
+      type: group
+       from: {
+        facet: {name: "facetedDatumFixed", data: "table", field: "destinations.buckets"}
+       }
+      data: [
+        {
+          name: facetDatumElemsFixed
+          source: facetedDatumFixed
+          transform: [
+            {
+              type: geopoint
+              projection: projection
+              fields: [
+                dstLocation.hits.hits[0]._source.{{ dst_lon }}
+                dstLocation.hits.hits[0]._source.{{ dst_lat }}
+              ]
+            }
+            {type: "formula", expr: "{x:parent.x, y:parent.y}", as: "source"}
+            {type: "formula", expr: "{x:datum.x, y:datum.y}", as: "target"}
+            {type: "linkpath", shape: "diagonal"}
+          ]
+        }
+      ]
+      scales: [
+        {
+          name: lineThickness
+          type: linear
+          domain: {data: "facetDatumElemsFixed", field: "doc_count"}
+          range: [1, {signal: "lineThickness"}]
+        }
+        {
+          name: lineOpacity
+          type: linear
+          domain: {data: "facetDatumElemsFixed", field: "doc_count"}
+          range: [0.1, {signal: "lineOpacity"}]
+        }
+      ]
+      marks: [
+        {
+          from: {data: "facetDatumElemsFixed"}
+          type: path
+          interactive: false
+          encode: {
+            update: {
+              path: {field: "path"}
+              stroke: {signal: "base_stroke"}
+              strokeWidth: {scale: "lineThickness", field: "doc_count"}
+              strokeOpacity: {scale: "lineOpacity", field: "doc_count"}
+            }
+          }
+        }
+      ]
+    }
+    {
+      type: group
+      from: {
+        facet: {name: "facetedDatum", data: "selectedDatum", field: "destinations.buckets"}
+      }
+      data: [
+        {
+          name: facetDatumElems
+          source: facetedDatum
+          transform: [
+            {
+              type: geopoint
+              projection: projection
+              fields: [
+                dstLocation.hits.hits[0]._source.{{ dst_lon }}
+                dstLocation.hits.hits[0]._source.{{ dst_lat }}
+              ]
+            }
+            {type: "formula", expr: "{x:parent.x, y:parent.y}", as: "source"}
+            {type: "formula", expr: "{x:datum.x, y:datum.y}", as: "target"}
+            {type: "linkpath", shape: "diagonal"}
+          ]
+        }
+      ]
+      scales: [
+        {
+          name: lineThickness
+          type: linear
+          domain: {data: "facetDatumElems", field: "doc_count"}
+          range: [
+            4
+            {signal: "lineThickness"}
+          ]
+        }
+        {
+          name: lineOpacity
+          type: linear
+          domain: {data: "facetDatumElems", field: "doc_count"}
+          range: [
+            0.5
+            {signal: "lineOpacity"}
+          ]
+        }
+      ]
+      marks: [
+        {
+          from: {data: "facetDatumElems"}
+          type: path
+          interactive: false
+          encode: {
+            update: {
+              path: {field: "path"}
+              stroke: {signal: "lineColor"}
+              strokeWidth: {scale: "lineThickness", field: "doc_count"}
+              strokeOpacity: {scale: "lineOpacity", field: "doc_count"}
+            }
+          }
+        }
+      ]
+    }
+    {
+      name: srcCountry
+      type: symbol
+      from: {data: "table"}
+      encode: {
+        update: {
+          size: {scale: "srcSize", field: "doc_count"}
+          xc: {signal: "datum.x"}
+          yc: {signal: "datum.y"}
+          tooltip: {
+            signal: "{title: datum.srcLocation.hits.hits[0]._source.{{ src_country }} + ' (' + datum.key + ')', destinations: length(datum.destinations.buckets), sessions: datum.doc_count,}"
+          }
+        }
+      }
+    }
+  ]
+}

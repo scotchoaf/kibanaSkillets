@@ -1,0 +1,69 @@
+# descriptor info for sankey view
+
+# skillet name
+name: src_dest_map
+# label used for menu selection
+label: Kibana Visual Vega map with src-dest lines
+description: Kibana Visual map with src-dest lines
+dependency:
+# type of device configuration
+type: template
+extends:
+
+# grouping of like snippets for dynamic menu creation in pan-cnc
+labels:
+  service_type: kibana
+  collection: kibana
+
+# variables used in the configuration templates
+# type_hint defines the form field type in pan-cnc
+variables:
+  - name: index
+    description: index name (without * at the end)
+    default: indexName
+    type_hint: text
+  - name: use_timeField
+    description: data includes a date-time field
+    default: 'yes'
+    type_hint: dropdown
+    dd_list:
+      - key: 'yes'
+        value: 'yes'
+      - key: 'no'
+        value: 'no'
+  - name: timeField
+    description: index time or date field
+    default: create_date
+    type_hint: text
+  - name: src_id
+    description: source identifier field such as country or country code
+    default: src_id
+    type_hint: text
+  - name: src_lon
+    description: field for source longitude value
+    default: src_lon
+    type_hint: text
+  - name: src_lat
+    description: field for source latitude value
+    default: src_lat
+    type_hint: text
+  - name: src_country
+    description: field for name of source country to be used in tooltip
+    default: src_country
+    type_hint: text
+  - name: dst_id
+    description: destination identifier field such as country or country code
+    default: dst_id
+    type_hint: text
+  - name: dst_lon
+    description: field for destination longitude value
+    default: dst_lon
+    type_hint: text
+  - name: dst_lat
+    description: field for destination latitude value
+    default: dst_lat
+    type_hint: text
+
+snippets:
+  - name: src_dest_map.txt
+    file: src_dest_map.txt
