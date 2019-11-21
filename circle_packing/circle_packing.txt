@@ -1,0 +1,133 @@
+{
+  $schema: https://vega.github.io/schema/vega/v4.3.json
+  config: {
+    kibana: {
+      tooltips: {
+        // always center on the mark, not mouse x,y
+        centerOnMark: true
+        position: top
+        padding: 20
+      }
+    }
+  }
+  data: [
+    {
+      // query ES based on the currently selected time range and filter string
+      name: rawData
+      url: {
+        %context%: true
+        // comment out if no timefield in the data
+        %timefield%: {{ timefield }}
+        index: {{ index }}*
+        body: {
+          size: 0
+          // composite query to get doc counts for the data sets and use for parent-child nesting
+          aggs: {
+            table: {
+              composite: {
+                size: 1000
+                sources: [
+                  {
+                    field1: {
+                      terms: {field: "{{ outerCircle_field }}"}
+                    }
+                  }
+                  {
+                    field2: {
+                      terms: {field: "{{ middleCircle_field }} "}
+                    }
+                  }
+                  {
+                    field3: {
+                      terms: {field: "{{ innerCircle_field }} "}
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+      // From the result, take just the data we are interested in
+      format: {property: "aggregations.table.buckets"}
+      // name fields to easily reference
+      transform: [
+        {
+          type: formula
+          expr: datum.key.field1
+          as: field1
+        }
+        {
+          type: formula
+          expr: datum.key.field2
+          as: field2
+        }
+        {
+          type: formula
+          expr: datum.key.field3
+          as: field3
+        }
+        {
+          type: formula
+          expr: datum.doc_count
+          as: size
+        }
+        {
+          type: nest
+          keys: ["field1", "field2", "field3"]
+          generate: true
+        }
+        {type: "identifier", as: "id"}
+        {
+          type: pack
+          field: size
+          padding: 2
+          sort: {field: "value"}
+          size: [
+            {signal: "width"}
+            {signal: "height"}
+          ]
+        }
+        {
+          type: joinaggregate
+          groupby: ["key"]
+          fields: ["doc_count"]
+          ops: ["sum"]
+          as: ["total"]
+        }
+      ]
+    }
+  ]
+  scales: [
+    {
+      name: color
+      type: ordinal
+      domain: {data: "rawData", field: "depth"}
+      range: {scheme: "category20"}
+    }
+  ]
+  marks: [
+    {
+      type: symbol
+      from: {data: "rawData"}
+      encode: {
+        enter: {
+          shape: {value: "circle"}
+          fill: {scale: "color", field: "depth"}
+          tooltip: {signal: "datum.key || 'nada'"}
+        }
+        update: {
+          x: {field: "x"}
+          y: {field: "y"}
+          size: {signal: "4 * datum.r * datum.r"}
+          stroke: {value: "white"}
+          strokeWidth: {value: 0.5}
+        }
+        hover: {
+          stroke: {value: "red"}
+          strokeWidth: {value: 2}
+        }
+      }
+    }
+  ]
+}

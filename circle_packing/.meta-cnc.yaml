@@ -1,0 +1,44 @@
+# descriptor info for circle packing view
+
+# skillet name
+name: 3_level_circle_packing
+# label used for menu selection
+label: Kibana Visual Vega 3-level circle packing
+description: Kibana Visual Vega 3-level circle packing visualization
+dependency:
+# type of device configuration
+type: template
+extends:
+
+# grouping of like snippets for dynamic menu creation in pan-cnc
+labels:
+  service_type: kibana
+  collection: kibana
+
+# variables used in the configuration templates
+# type_hint defines the form field type in pan-cnc
+variables:
+  - name: index
+    description: index name (without * at the end)
+    default: hash-data
+    type_hint: text
+  - name: timefield
+    description: index time or date field
+    default: create_date
+    type_hint: text
+  - name: outerCircle_field
+    description: field for top level circle grouping
+    default: outerCircle_field
+    type_hint: text
+  - name: middleCircle_field
+    description: field for mid level circle grouping
+    default: middleCircle_field
+    type_hint: text
+  - name: innerCircle_field
+    description: field for lower level circle grouping
+    default: innerCircle_field
+    type_hint: text
+
+snippets:
+  - name: circle_packing.txt
+    file: circle_packing.txt
