@@ -1,0 +1,45 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+  "data": {
+    url: {
+      %context%: true
+      %timefield%: {{ timeField }}
+      index: {{ index }}*
+      body: {
+        "size": 10000,
+        "_source": ["{{ timeField }}", "{{ bubbleGroup }}", "{{ countField }}"]
+      }
+    }
+    format: {property: "hits.hits"}
+  }
+    # Parse timestamp into a javascript date value
+  transform: [
+    {calculate: "toDate(datum._source['{{ timeField }}'])", as: "time"},
+    // apply field filter listing fields to include - there is no exclude filter option
+    // or use the filter options in the visual or dashboard views
+    // use a double quoted, comma separated list of field names to include
+    // {"filter": {"field": "_source.{{ fieldName }}", "oneOf":["fieldValue1", "fieldValue2", "fieldValue3]}},
+  ]
+  "mark": {
+    "type": "circle",
+    "opacity": 0.8,
+    "stroke": "black",
+    "strokeWidth": 1
+  },
+  "encoding": {
+    "x": {
+      "field": "time",
+      "type": "temporal",
+      "axis": {"labelAngle": 0}
+    },
+    "y": {"field": "_source.{{ bubbleGroup }}", "type": "nominal", "axis": {"title": ""}},
+    "size": {
+      "field": "_source.{{ countField }}",
+      "type": "quantitative",
+      "legend": {"title": "{{ legendTitle }}"},
+      // use range to adjust max size of bubbles
+      "scale": {"range": [0, 5000]}
+    },
+    "color": {"field": "_source.{{ bubbleGroup }}", "type": "nominal", "legend": null}
+  }
+}

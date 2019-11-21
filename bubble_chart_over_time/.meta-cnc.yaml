@@ -1,0 +1,44 @@
+# descriptor info for circle packing view
+
+# skillet name
+name: bubble_chart_over_time
+# label used for menu selection
+label: Kibana Visual Vega-Lite time-based bubble chart
+description: Kibana Visual Vega-Lite time-based bubble chart
+dependency:
+# type of device configuration
+type: template
+extends:
+
+# grouping of like snippets for dynamic menu creation in pan-cnc
+labels:
+  service_type: kibana
+  collection: kibana
+
+# variables used in the configuration templates
+# type_hint defines the form field type in pan-cnc
+variables:
+  - name: index
+    description: index name (without * at the end)
+    default: indexName
+    type_hint: text
+  - name: timefield
+    description: index time or date field
+    default: timeField
+    type_hint: text
+  - name: bubbleGroup
+    description: field used to create buckets or rows of bubbles
+    default: bubbleGroup
+    type_hint: text
+  - name: countField
+    description: field used to set the size of the bubbles
+    default: countField
+    type_hint: text
+  - name: legendTitle
+    description: legend title associated to bubble values
+    default: legendTitle
+    type_hint: text
+
+snippets:
+  - name: bubble_chart_over_time.txt
+    file: bubble_chart_over_time.txt
