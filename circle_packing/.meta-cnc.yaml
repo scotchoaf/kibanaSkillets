@@ -33,7 +33,7 @@ variables:
         value: 'no'
   - name: timefield
     description: index time or date field
-    default: create_date
+    default: timeField
     type_hint: text
   - name: outerCircle_field
     description: field for top level circle grouping

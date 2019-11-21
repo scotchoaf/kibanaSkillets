@@ -31,9 +31,9 @@ variables:
         value: 'yes'
       - key: 'no'
         value: 'no'
-  - name: timeField
+  - name: timefield
     description: index time or date field
-    default: create_date
+    default: timeField
     type_hint: text
   - name: src_id
     description: source identifier field such as country or country code

@@ -11,7 +11,7 @@
         %context%: true
         // Uncomment to enable time filtering
         {%- if use_timeField == "yes" %}
-        %timefield%: {{ timefield }}
+        %timefield%: {{ timeield }}
         {% else %}
         // %timefield%: {{ timefield }}
         {% endif %}
