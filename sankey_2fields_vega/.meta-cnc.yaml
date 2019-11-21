@@ -24,13 +24,13 @@ variables:
     type_hint: text
   - name: use_timeField
     description: data includes a date-time field
-    default: "yes"
-    type_hint: dd
+    default: 'yes'
+    type_hint: dropdown
     dd_list:
-      - key: yes
-        value: "yes"
-      - key: no
-        value: "no"
+      - key: 'yes'
+        value: 'yes'
+      - key: 'no'
+        value: 'no'
   - name: timeField
     description: index time or date field
     default: create_date
