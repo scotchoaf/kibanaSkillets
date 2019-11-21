@@ -18,6 +18,11 @@ except for the 2 tooltip fields.
 
 + ```index```: name of the Elasticsearch index (without the '*' at the end)
 
++ ```use_timeField```: does the data set have a timefield to use in filters
+
++ ```timefield```: time or date field used in the specific index allowing for
+the ability to use the Kibana time filter
+
 + ```aggField```:  used for each circle representation
 
 + ```xAxisField```:  field for x-axis scatter plot values

@@ -12,6 +12,8 @@ to update the input specific to the user's deployment.
 
 + ```index```: name of the Elasticsearch index (without the '*' at the end)
 
++ ```use_timeField```: does the data set have a timefield to use in filters
+
 + ```timefield```: time or date field used in the specific index allowing for
 the ability to use the Kibana time filter
 
