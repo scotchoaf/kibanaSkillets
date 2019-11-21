@@ -19,7 +19,7 @@
         // comment out if no timefield in the data
         {%- if use_timeField == "yes" %}
         %timefield%: {{ timefield }}
-        {% elseif %}
+        {% else %}
         // %timefield%: {{ timefield }}
         {% endif %}
         index: {{ index }}*
