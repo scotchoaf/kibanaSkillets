@@ -1,9 +1,9 @@
-# 3-Level Circle Packing Visual using Vega
+# Time-Based Bubble Chart using Vega-Lite
 
-This visual is based on the tutorial from the [Vega Gallery: Cicle Packing](https://vega.github.io/vega/examples/circle-packing/)
+This visual is based on the tutorial from the [Vega-Lite Gallery: Bubble Chart](https://vega.github.io/vega-lite/examples/circle_natural_disasters.html)
 
-Circle packing uses a nest transform to show 3-level grouping of the data.
-A tooltip pop-up gives the value associated to a selected circle.
+Bubble charts are circles mapped over time and grouped by a category. The size
+of the bubble is determine by a count field in the data.
 
 ### Input variables
 
@@ -12,16 +12,14 @@ to update the input specific to the user's deployment.
 
 + ```index```: name of the Elasticsearch index (without the '*' at the end)
 
-+ ```use_timeField```: does the data set have a timefield to use in filters
-
 + ```timefield```: time or date field used in the specific index allowing for
 the ability to use the Kibana time filter
 
-+ ```outerCircle_field```: outer most circle grouping
++ ```bubbleGroup```: field used to create bubble categories
 
-+ ```middleCircle_field```: middle level circle grouping
++ ```countField```: numberic field used to set bubble size
 
-+ ```innerCircle_field```: inner most circle grouping
++ ```legendTitle```: legend title associated to bubble values
 
 ***NOTE***: The text fields may require the use of
 ```.keyword``` to be used in this vega visual.
