@@ -42,7 +42,7 @@ variables:
     description: field for left side of sankey
     default: mystk1
     type_hint: text
-    help_text: '.keyword' auto appended during render to avoid aggregation errors
+    help_text: `.keyword` is auto appended during render to avoid aggregation errors
   - name: stack_1_label
     description: chart axis label for left side of sankey
     default: mystk1_label
@@ -51,7 +51,7 @@ variables:
     description: field for right side of sankey
     default: mystk2
     type_hint: text
-    help_text: '.keyword' auto appended during render to avoid aggregation errors
+    help_text: `.keyword` is auto appended during render to avoid aggregation errors
   - name: stack_2_label
     description: chart axis label for right side of sankey
     default: mystk2_label
