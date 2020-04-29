@@ -28,8 +28,9 @@ the ability to use the Kibana time filter
 
 + ```stack_2_label```: name to use for the stack2 chart axis label
 
-***NOTE***: The stack1 and stack2 fields may require the use of
-```.keyword``` to be used in this vega visual.
+***NOTE***: The text fields may require the use of
+```.keyword``` to be used in this vega visual. This is included in the template
+where required.
 
 ### Kibana and long URLs
 

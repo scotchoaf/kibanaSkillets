@@ -11,6 +11,9 @@ The added content includes:
 * legends for the above category and sizing
 * tooltip pop-up providing circle context
 
+Elasticsearch supports dots in name whereas Vega isn't 'dot friendly.' Therefore
+name aliases are used in transforms to get around the dot naming issue
+
 ### Input variables
 
 The following are the variables used in the Vega text. All are required
@@ -25,20 +28,29 @@ the ability to use the Kibana time filter
 
 + ```aggField```:  used for each circle representation
 
++ ```aggFieldAlias```:  alias name for aggField
+
 + ```xAxisField```:  field for x-axis scatter plot values
+
++ ```xAxisFieldAlias```:  alias name for xAxisField
 
 + ```yAxisField```:  field for y-axis scatter plot values
 
++ ```yAxisFieldAlias```:  alias name for yAxisField
+
 + ```colorByField```: field to color circles by category
+
++ ```colorByFieldAlias```: alias name for colorByField
+
++ ```includeSize```: dropdown to select if field sizes set by a field value
 
 + ```sizeByField```: field used to set circle sizes
 
-+ ```ToolTipLabelField1```: added label in the pop-up tooltip
++ ```sizeByFieldAlias```: alias name for sizeByField
 
-+ ```ToolTipLabelField2```: added label in the pop-up tooltip
-
-***NOTE***: text fields may require the use of
-```.keyword``` to be used in this vega visual.
+***NOTE***: The text fields may require the use of
+```.keyword``` to be used in this vega visual. This is included in the template
+where required.
 
 ### Kibana and long URLs
 

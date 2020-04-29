@@ -5,10 +5,15 @@ This visual is based on the tutorial from the [Vega-Lite Gallery: Bubble Chart](
 Bubble charts are circles mapped over time and grouped by a category. The size
 of the bubble is determine by a count field in the data.
 
+Elasticsearch supports dots in name whereas Vega isn't 'dot friendly.' Therefore
+name aliases are used in transforms to get around the dot naming issue
+
 ### Input variables
 
 Most of the Vega input is the same with the inclusion of a few jinja variables
 to update the input specific to the user's deployment.
+
++ ```chartTitle```: title displayed at the top of the chart
 
 + ```index```: name of the Elasticsearch index (without the '*' at the end)
 
@@ -17,12 +22,17 @@ the ability to use the Kibana time filter
 
 + ```bubbleGroup```: field used to create bubble categories
 
++ ```bubbleGroupAlias```: alias for the bubbleGroup field name
+
 + ```countField```: numberic field used to set bubble size
+
++ ```countFieldAlias```: alias for the countField field name
 
 + ```legendTitle```: legend title associated to bubble values
 
 ***NOTE***: The text fields may require the use of
-```.keyword``` to be used in this vega visual.
+```.keyword``` to be used in this vega visual. This is included in the template
+where required.
 
 ### Kibana and long URLs
 
