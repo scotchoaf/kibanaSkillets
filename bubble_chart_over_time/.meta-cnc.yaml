@@ -18,24 +18,42 @@ labels:
 # variables used in the configuration templates
 # type_hint defines the form field type in pan-cnc
 variables:
+  - name: chartTitle
+    description: title of the chart
+    default: chart title
+    type_hint: text
   - name: index
     description: index name (without * at the end)
     default: indexName
     type_hint: text
+    help_text: name of the ElasticSearch index as the source of data
   - name: timefield
     description: index time or date field
     default: timeField
     type_hint: text
+
   - name: bubbleGroup
-    description: field used to create buckets or rows of bubbles
+    description: field used to create buckets for rows of bubbles
     default: bubbleGroup
     type_hint: text
+  - name: bubbleGroupAlias
+    description: dot free alias for the grouping field
+    default: bubbleGroupAlias
+    type_hint: text
+    help_text: Vega doesn't like dots in names so create a 'dot free' alias name
+
   - name: countField
     description: field used to set the size of the bubbles
     default: countField
     type_hint: text
+  - name: countFieldAlias
+    description: field used to set the size of the bubbles
+    default: countFieldAlias
+    type_hint: text
+    help_text: Vega doesn't like dots in names so create a 'dot free' alias name
+
   - name: legendTitle
-    description: legend title associated to bubble values
+    description: legend title associated to bubble group field
     default: legendTitle
     type_hint: text
 
