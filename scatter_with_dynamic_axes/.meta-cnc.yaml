@@ -91,12 +91,17 @@ variables:
     description: field for circle sizing
     default: sizeByField
     type_hint: text
+    toggle_hint:
+      source: includeSize
+      value: 'yes'
   - name: sizeByFieldAlias
     description: alias for circle sizing field
     default: sizeByFieldAlias
     type_hint: text
     help_text: Vega doesn't like dots in names so create a 'dot free' alias name
-
+    toggle_hint:
+      source: includeSize
+      value: 'yes'
 
 snippets:
   - name: scatter_w_dynamic_axes.txt

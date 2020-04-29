@@ -330,15 +330,13 @@
           tooltip: {
             signal: "{title: datum.{{ aggFieldAlias }},
             {{ colorByFieldAlias }}: datum.{{ colorByFieldAlias }},
-            // add additional pop-up fields noting dot named fields require a transform alias
-            // {{ ToolTipLabelField1Alias }}: datum.{{ ToolTipLabelField1Alias }},
-            // {{ ToolTipLabelField2Alias }}: datum.{{ ToolTipLabelField2Alias }}}"
+            }"
           }
         }
         update: {
           x: {
             scale: xscale
-            field: { xAxisFieldAlias }}
+            field: {{ xAxisFieldAlias }}
           }
           y: {
             scale: yscale
