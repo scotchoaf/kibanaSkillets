@@ -22,12 +22,12 @@
                 sources: [
                   {
                     stk1: {
-                      terms: {field: "{{ stack_1_field }}"}
+                      terms: {field: "{{ stack_1_field }}.keyword"}
                     }
                   }
                   {
                     stk2: {
-                      terms: {field: "{{ stack_2_field }}"}
+                      terms: {field: "{{ stack_2_field }}.keyword"}
                     }
                   }
                 ]
