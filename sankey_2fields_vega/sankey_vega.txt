@@ -32,6 +32,13 @@
                   }
                 ]
               }
+            {% if sankeyLines == 'sumField' %}
+              "aggregations": {
+                "total": {
+                    "sum": { "field": "{{ sumField }}" }
+                }
+            }
+            {% endif %}
             }
           }
         }
@@ -42,7 +49,11 @@
       transform: [
         {type: "formula", expr: "datum.key.stk1", as: "stk1"}
         {type: "formula", expr: "datum.key.stk2", as: "stk2"}
+      {% if sankeyLines == 'sumField' %}
+        {type: "formula", expr: "datum.total.value", as: "size"}
+      {% elif sankeyLines == 'docCount' %}
         {type: "formula", expr: "datum.doc_count", as: "size"}
+      {% endif %}
       ]
     }
     {

@@ -35,10 +35,14 @@ variables:
     description: index time or date field
     default: timeField
     type_hint: text
+    toggle_hint:
+      source: use_timeField
+      value: 'yes'
   - name: stack_1_field
     description: field for left side of sankey
     default: mystk1
     type_hint: text
+    help_text: typically requires appending '.keyword' to avoid aggregation errors
   - name: stack_1_label
     description: chart axis label for left side of sankey
     default: mystk1_label
@@ -47,10 +51,27 @@ variables:
     description: field for right side of sankey
     default: mystk2
     type_hint: text
+    help_text: typically requires appending '.keyword' to avoid aggregation errors
   - name: stack_2_label
     description: chart axis label for right side of sankey
     default: mystk2_label
     type_hint: text
+  - name: sankeyLines
+    description: select if connecting lines based on doc counts or sum of field values
+    default: doc_count
+    type_hint: dropdown
+    dd_list:
+      - key: 'doc_count'
+        value: docCount
+      - key: 'sum field'
+        value: sumField
+  - name: sumField
+    description: sum aggregation field for Sankey lines
+    default: sum_field
+    type_hint: text
+    toggle_hint:
+      source: sankeyLines
+      value: sumField
 
 snippets:
   - name: sankey_vega.txt
