@@ -35,34 +35,68 @@ variables:
     description: index time or date field
     default: timeField
     type_hint: text
+
   - name: aggField
     description: key category field for aggregation count
     default: aggField
     type_hint: text
+    help_text: this field defines the aggregation for each bubble
+  - name: aggFieldAlias
+    description: alias for the aggregation field
+    default: aggFieldAliasa
+    type_hint: text
+    help_text: Vega doesn't like dots in names so create a 'dot free' alias name
+
   - name: xAxisField
     description: field for x-axis of the scatter plot
     default: xAxisField
     type_hint: text
+  - name: xAxisFieldAlias
+    description: alias for the x-axis of the scatter plot field
+    default: xAxisFieldAlias
+    type_hint: text
+    help_text: Vega doesn't like dots in names so create a 'dot free' alias name
+
   - name: yAxisField
     description: field for y-axis of the scatter plot
     default: yAxisField
     type_hint: text
+  - name: yAxisFieldAlias
+    description: alias for the y-axis of the scatter plot field
+    default: yAxisFieldAlias
+    type_hint: text
+    help_text: Vega doesn't like dots in names so create a 'dot free' alias name
+
   - name: colorByField
     description: field for circle color categories
     default: colorByField
     type_hint: text
+  - name: colorByFieldAlias
+    description: alias for circle color categories field
+    default: colorByFieldAlias
+    type_hint: text
+    help_text: Vega doesn't like dots in names so create a 'dot free' alias name
+
+  - name: includeSize
+    description: choose if the output sets bubble size based on a field value
+    default: 'yes'
+    help_text: yes will vary bubble sizes using a third metric and no sets all bubbles to a default size
+    type_hint: dropdown
+    dd_list:
+      - key: 'yes'
+        value: 'yes'
+      - key: 'no'
+        value: 'no'
   - name: sizeByField
     description: field for circle sizing
     default: sizeByField
     type_hint: text
-  - name: ToolTipLabelField1
-    description: contextual data for circle pop-up tool tip
-    default: ToolTipLabelField1
+  - name: sizeByFieldAlias
+    description: alias for circle sizing field
+    default: sizeByFieldAlias
     type_hint: text
-  - name: ToolTipLabelField2
-    description: contextual data for circle pop-up tool tip
-    default: ToolTipLabelField2
-    type_hint: text
+    help_text: Vega doesn't like dots in names so create a 'dot free' alias name
+
 
 snippets:
   - name: scatter_w_dynamic_axes.txt

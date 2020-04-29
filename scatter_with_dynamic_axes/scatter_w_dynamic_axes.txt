@@ -48,6 +48,13 @@
           field: metrics.hits.hits[0]._source['{{ yAxisField }}']
           signal: yext
         }
+         {type: "formula", expr: "datum.metrics.hits.hits[0]._source['{{ aggField }}']", as: "{{ aggFieldAlias }}"},
+         {type: "formula", expr: "datum.metrics.hits.hits[0]._source['{{ xAxisField }}']", as: "{{ xAxisFieldAlias }}"},
+         {type: "formula", expr: "datum.metrics.hits.hits[0]._source['{{ yAxisField }}']", as: "{{ yAxisFieldAlias }}"},
+         {type: "formula", expr: "datum.metrics.hits.hits[0]._source['{{ colorByField }}']", as: "{{ colorByFieldAlias }}"},
+       {% if includeSize == 'yes' %}
+         {type: "formula", expr: "datum.metrics.hits.hits[0]._source['{{ sizeByField }}']", as: "{{ sizeByFieldAlias }}"},
+       {% endif %}
       ]
     }
   ]
@@ -233,10 +240,11 @@
       type: ordinal
       domain: {
         data: points
-        field: metrics.hits.hits[0]._source['{{ colorByField }}']
+        field: {{ colorByFieldAlias }}
       }
       range: {scheme: "category10"}
     }
+   {% if includeSize == 'yes' %}
     {
       name: size
       type: linear
@@ -245,30 +253,33 @@
       zero: true
       domain: {
         data: points
-        field: metrics.hits.hits[0]._source['{{ sizeByField }}']
+        field: {{ sizeByFieldAlias }}
       }
       range: [500, 5000]
     }
+    {% endif %}
   ]
   legends: [
     {
       fill: color
-      title: {{ colorByField }}
+      title: {{ colorByFieldAlias }}
       // symbolStrokeColor: "#4682b4"
       // symbolStrokeWidth: 2
       symbolOpacity: 0.5
       symbolType: circle
       symbolSize: 100
     }
+   {% if includeSize == 'yes' %}
     {
       size: size
-      title: {{ sizeByField }}
+      title: {{ sizeByFieldAlias }}
       format: s
       symbolStrokeColor: "#4682b4"
       symbolStrokeWidth: 2
       symbolOpacity: 0.5
       symbolType: circle
     }
+    {% endif %}
   ]
   axes: [
     {
@@ -278,7 +289,7 @@
       orient: top
       offset: {signal: "xoffset"}
       tickCount: 5
-      title: {{ xAxisField }}
+      title: {{ xAxisFieldAlias }}
       titlePadding: -50
     }
     {
@@ -286,7 +297,7 @@
       grid: true
       orient: right
       offset: {signal: "yoffset"}
-      title: {{ yAxisField }}
+      title: {{ yAxisFieldAlias }}
       titlePadding: -50
     }
   ]
@@ -302,28 +313,36 @@
           opacity: {value: 0.5}
           stroke: {
             scale: color
-            field: metrics.hits.hits[0]._source['{{ colorByField }}']
+            field: {{ colorByFieldAlias }}
           }
           fill: {
             scale: color
-            field: metrics.hits.hits[0]._source['{{ colorByField }}']
+            field: {{ colorByFieldAlias }}
           }
+         {% if includeSize == 'yes' %}
           size: {
             scale: size
-            field: metrics.hits.hits[0]._source['{{ sizeByField }}']
+            field: {{ sizeByFieldAlias }}
           }
+          {% else %}
+          size: value: 500
+          {% endif %}
           tooltip: {
-            signal: "{title: datum.metrics.hits.hits[0]._source['{{ aggField }}'], {{ colorByField }}: datum.metrics.hits.hits[0]._source['{{ colorByField }}'], {{ ToolTipLabelField1 }}: datum.metrics.hits.hits[0]._source['{{ ToolTipLabelField1 }}'], {{ ToolTipLabelField2 }}: datum.metrics.hits.hits[0]._source['{{ ToolTipLabelField2 }}']}"
+            signal: "{title: datum.{{ aggFieldAlias }},
+            {{ colorByFieldAlias }}: datum.{{ colorByFieldAlias }},
+            // add additional pop-up fields noting dot named fields require a transform alias
+            // {{ ToolTipLabelField1Alias }}: datum.{{ ToolTipLabelField1Alias }},
+            // {{ ToolTipLabelField2Alias }}: datum.{{ ToolTipLabelField2Alias }}}"
           }
         }
         update: {
           x: {
             scale: xscale
-            field: metrics.hits.hits[0]._source['{{ xAxisField }}']
+            field: { xAxisFieldAlias }}
           }
           y: {
             scale: yscale
-            field: metrics.hits.hits[0]._source['{{ yAxisField }}']
+            field: {{ yAxisFieldAlias }}
           }
         }
         hover: {
@@ -332,7 +351,7 @@
         leave: {
           fill: {
             scale: color
-            field: metrics.hits.hits[0]._source['{{ colorByField }}']
+            field: {{ colorByFieldAlias }}
           }
         }
       }
