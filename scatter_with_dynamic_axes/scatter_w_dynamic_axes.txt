@@ -26,7 +26,7 @@
           size: 0
           aggs: {
             aggData: {
-              terms: {field: "{{ aggField }}", size: 10000}
+              terms: {field: "{{ aggField }}.keyword", size: 10000}
               aggs: {
                 metrics: {
                   top_hits: {}

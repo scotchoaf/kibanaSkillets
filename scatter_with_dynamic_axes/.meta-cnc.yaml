@@ -40,10 +40,10 @@ variables:
     description: key category field for aggregation count
     default: aggField
     type_hint: text
-    help_text: this field defines the aggregation for each bubble
+    help_text: this field defines the aggregation for each bubble with .keyword added in the render output
   - name: aggFieldAlias
     description: alias for the aggregation field
-    default: aggFieldAliasa
+    default: aggFieldAlias
     type_hint: text
     help_text: Vega doesn't like dots in names so create a 'dot free' alias name
 
