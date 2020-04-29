@@ -325,12 +325,10 @@
             field: {{ sizeByFieldAlias }}
           }
           {% else %}
-          size: value: 500
+          size: { value: 500 }
           {% endif %}
           tooltip: {
-            signal: "{title: datum.{{ aggFieldAlias }},
-            {{ colorByFieldAlias }}: datum.{{ colorByFieldAlias }},
-            }"
+            signal: "{title: datum.{{ aggFieldAlias }}, {{ colorByFieldAlias }}: datum.{{ colorByFieldAlias }} }"
           }
         }
         update: {
